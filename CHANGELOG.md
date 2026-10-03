@@ -47,7 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   covers this repository only, not Gameforge's files.
 - **Release archive** — players download a ZIP from the repository's releases instead of cloning
   it: `Install.cmd`, `Uninstall.cmd` and `Status.cmd` run the installer with a double-click, and
-  `README.txt` is their guide. `release/build.py` builds it; the `Release` workflow runs it on
+  `README.txt` is their guide, down to the security warning Windows shows before running these
+  unsigned files and how to avoid it. `release/build.py` builds it; the `Release` workflow runs it on
   GitHub, attests the archive's provenance and opens a draft release, so the archive comes from
   the public code and nothing is public before it has been checked.
 
