@@ -171,7 +171,9 @@ function Assert-Writable {
   if ($LogPath) { throw "Writing refused in $(Split-Path $pak), even as administrator." }
   $log = Join-Path ([IO.Path]::GetTempPath()) ('gf-alias-addon-' + [guid]::NewGuid().ToString('N') + '.log')
   $exe = (Get-Process -Id $PID).Path
-  $argLine = '-NoProfile -File "{0}" {1} -PakPath "{2}" -AddonPath "{3}" -LogPath "{4}"' -f $PSCommandPath, $Action, $pak, $addon, $log
+  # The elevated session does not inherit this one's execution policy: without Bypass, Windows
+  # PowerShell's default policy (Restricted) would refuse to run this script there.
+  $argLine = '-NoProfile -ExecutionPolicy Bypass -File "{0}" {1} -PakPath "{2}" -AddonPath "{3}" -LogPath "{4}"' -f $PSCommandPath, $Action, $pak, $addon, $log
   if ($Diagnostic) { $argLine += ' -Diagnostic' }
   Say 'Administrator rights are needed to modify frontend.pak: accept the UAC prompt.' Yellow
   try {
