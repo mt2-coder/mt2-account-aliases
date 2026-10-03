@@ -43,12 +43,24 @@ the page. That one file is the whole trust surface.
 
 ## Install
 
-Requirements: Windows 10 or 11, the Gameforge Client, Windows PowerShell 5.1 (built into Windows)
-or PowerShell 7, and administrator rights. `frontend.pak` sits under `Program Files`, so `install`
-and `revert` ask for elevation (a UAC prompt) and relay the elevated output.
+Requirements: Windows 10 or 11, the Gameforge Client and administrator rights. `frontend.pak`
+sits under `Program Files`, so installing and uninstalling ask for elevation (a UAC prompt).
 
-**Close the launcher completely first**, including its notification-area icon. From the
-repository root:
+1. Download the archive of the [latest release](https://github.com/mt2-coder/mt2-account-aliases/releases/latest)
+   and extract it.
+2. Close your Metin2 clients, then **close the launcher completely**, including its
+   notification-area icon.
+3. Double-click `Install.cmd`. `Uninstall.cmd` restores the original `frontend.pak` byte for
+   byte, and `Status.cmd` reports what is installed without changing anything.
+
+The archive's `README.txt` is the players' guide. The `.cmd` files only start the installer,
+`scripts/alias-addon.ps1`, with Windows PowerShell 5.1 and `-ExecutionPolicy Bypass`; extra
+arguments go through (`Install.cmd -Diagnostic`).
+
+### From a clone
+
+The same `.cmd` files are in [`release/`](release/), or call the installer directly, with Windows
+PowerShell 5.1 or PowerShell 7:
 
 ```powershell
 .\scripts\alias-addon.ps1 status    # changes nothing: what is installed, backup state
@@ -56,7 +68,7 @@ repository root:
 .\scripts\alias-addon.ps1 revert    # restores the original frontend.pak byte for byte
 ```
 
-If script execution is blocked on the machine (a downloaded copy, for instance), run
+If script execution is blocked on the machine, run
 `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\alias-addon.ps1 install`.
 
 `install` keeps the untouched original next to it as `frontend.pak.alias-backup`, writes the
@@ -69,9 +81,9 @@ another add-on file; both are how it is tested.
 The launcher patches `frontend.pak` with binary deltas (xdelta3), which cannot apply to a modified
 file. When it announces an interface update, or reports that it could not apply one:
 
-1. close the launcher and run `revert`;
+1. close the launcher and run `revert` (`Uninstall.cmd`);
 2. start the launcher, let it update, then close it;
-3. run `install` again.
+3. run `install` (`Install.cmd`) again.
 
 `status` reports a backup that no longer matches the current file, which is what a launcher
 update leaves behind; `install` then replaces it with a fresh one.
@@ -102,6 +114,8 @@ with it: the globe icon at the top right of the launcher sets it back.
 | [`scripts/alias-addon.ps1`](scripts/alias-addon.ps1) | the installer: `status`, `install`, `revert`, `-Diagnostic` |
 | [`test/logic.test.cjs`](test/logic.test.cjs) | unit tests of the add-on's pure helpers, for Node |
 | [`test/mock-launcher.html`](test/mock-launcher.html) | look-alike of the launcher's Settings popup, to run the add-on in a browser |
+| [`release/`](release/) | what the players' archive adds (`.cmd` files, `README.txt`) and `build.py`, which builds it |
+| [`.github/workflows/release.yml`](.github/workflows/release.yml) | builds the archive on GitHub and opens a draft release |
 | [`docs/`](docs/) | how the launcher works, as far as the add-on is concerned |
 | [`CLAUDE.md`](CLAUDE.md) | context, frozen decisions, rules and traps: read it first |
 | [`CHANGELOG.md`](CHANGELOG.md) | what changed, and why |
@@ -121,6 +135,20 @@ page; [CLAUDE.md](CLAUDE.md#testing) describes the headless run and how the inst
 
 A change to the installer is tested against a copy of `frontend.pak` (`-PakPath`) before it goes
 anywhere near the real launcher.
+
+## Releasing
+
+1. In `CHANGELOG.md`, turn `## [Unreleased]` into `## [x.y.z] - <date>`, open a new empty
+   `## [Unreleased]` above it, update the links at the bottom, and commit
+   `chore(release): x.y.z` on `main`.
+2. On GitHub, **Actions > Release > Run workflow** with the version `x.y.z`. The workflow runs the
+   unit tests, builds the archive with `release/build.py`, attests its provenance and opens a
+   **draft** release with the archive, its SHA-256 and notes taken from the changelog.
+3. Download the draft's archive and try it on a PC that has never run the repository.
+4. Publish the draft. Only then is the `vx.y.z` tag created, on the commit the workflow built.
+
+To check the archive locally: `python release/build.py x.y.z dist` (the version needs its
+changelog section).
 
 ## Licence
 

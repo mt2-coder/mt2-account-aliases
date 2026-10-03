@@ -478,7 +478,7 @@ function Install-Addon {
   Write-Html (Add-Block $state.Html (New-Block $code $addonSha $origSha))
   Say 'Add-on installed. In the launcher, game account list: a pencil on every row and the "Alias" bar at the bottom right.' Green
   Show-DiagnosticNote $false
-  Say 'To remove it: .\scripts\alias-addon.ps1 revert'
+  Say 'To remove it: Uninstall.cmd, or this script with revert.'
 }
 
 function Show-DiagnosticNote([bool]$Removed) {

@@ -62,7 +62,19 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   Update mode is banned: on .NET Framework it corrupts the empty deflated entry this pak contains
   (`js/css.31d6cfe0.js`). It relaunches itself through UAC when it cannot write, relaying the
   output through a temporary log, and refuses while a launcher started from that installation is
-  running.
+  running. The relaunch passes `-ExecutionPolicy Bypass`: the elevated session does not inherit
+  the caller's policy, and Windows PowerShell's default one (Restricted) refuses every script.
+- **Distribution.** Players get a GitHub release, not a clone: a ZIP with `Install.cmd`,
+  `Uninstall.cmd`, `Status.cmd`, `README.txt`, `LICENSE`, `scripts/alias-addon.ps1` and
+  `src/alias-addon.js`, in the repository's layout so the installer finds the add-on as in a
+  clone. The `.cmd` files start `%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe`
+  with `-ExecutionPolicy Bypass` (players never open a terminal) and find the script in the
+  archive or, from `release/`, in a clone. `release/build.py` builds the ZIP; the
+  `.github/workflows/release.yml` workflow, started by hand on `main`, runs it on GitHub, attests
+  the archive's provenance and opens a **draft** release whose tag is only created when the draft
+  is published. Built on GitHub rather than on a PC, so no local file (`CLAUDE.local.md`, a pak
+  copy) can slip in. No code signing: a certificate costs money and ties the project to a
+  verified legal identity; the files stay plain text that anyone can read.
 - **Diagnostics without devtools.** The add-on publishes its state, summed over all its windows,
   in `body[data-gf-alias-state]` of the main page. `install -Diagnostic` adds a CSS-only label,
   in the main window only, that displays it, so it shows even when the script never runs. This is
@@ -134,6 +146,9 @@ Details, minified module ids and how each fact was found: [docs/launcher-interna
   `"$pak:"` is a parse error (a drive-qualified variable): write `"${pak}:"`. Check paths before
   using them, so that errors come in the installer's English rather than in the system's
   language.
+- The `.cmd` files and `release/README.txt` are ASCII. `.gitattributes` checks the `.cmd` files
+  out with CRLF, which cmd.exe needs, and `release/build.py` writes both with CRLF whatever the
+  checkout did.
 
 ## Testing
 
@@ -152,11 +167,15 @@ Details, minified module ids and how each fact was found: [docs/launcher-interna
    `-Diagnostic`, under both PowerShells. Validate a patched pak independently: Python `zipfile`
    (`testzip()`, raw compressed bytes unchanged except `index.html`) and Windows' `tar.exe -tf`
    (Git Bash's GNU tar cannot read a ZIP). These scenarios are not automated in the repository
-   yet.
-4. The real launcher last: closed, with someone at the machine to accept the UAC prompt.
+   yet. The elevated relaunch can be checked without UAC: start its exact command line with
+   `PSExecutionPolicyPreference` cleared, and, from PowerShell 7, with the machine's
+   `PSModulePath` (pwsh's own module paths make Windows PowerShell lose `Get-FileHash`).
+4. Release archive: `python release/build.py <version> <dir>`, extract it, mark the files as
+   downloaded (`Zone.Identifier` stream, `ZoneId=3`), then run `Status.cmd`, and `Install.cmd` /
+   `Uninstall.cmd` with `-PakPath <copy>`, from the extracted folder.
+5. The real launcher last: closed, with someone at the machine to accept the UAC prompt.
 
 ## Open decisions
 
-- How players get the add-on: a clone of this repository or a release archive.
 - Interface updates stay manual (revert, update, install). Automating them would need a watcher or
   a scheduled task.

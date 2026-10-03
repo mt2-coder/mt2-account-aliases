@@ -1,0 +1,49 @@
+name: Release
+
+# Builds the player archive from main and opens a draft release for it. Nothing is public until
+# the draft is published from GitHub's interface: the tag is only created then.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to release, with its own section in CHANGELOG.md (for example 0.1.0)
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  draft:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write          # create the draft release
+      id-token: write          # sign the provenance attestation
+      attestations: write      # store it
+      artifact-metadata: write # record the archive it covers
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run the unit tests
+        run: node test/logic.test.cjs
+
+      - name: Build the archive
+        run: python3 release/build.py "$VERSION" dist
+
+      - name: Attest its provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: dist/*.zip
+
+      - name: Open the draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: >-
+          gh release create "v$VERSION" --draft --target "$GITHUB_SHA" --title "v$VERSION"
+          --notes-file dist/release-notes.md
+          "dist/mt2-account-aliases-$VERSION.zip" "dist/mt2-account-aliases-$VERSION.zip.sha256"

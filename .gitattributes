@@ -2,3 +2,5 @@
 # the add-on's sha256 in the launcher's index.html and compares it with src/alias-addon.js: a
 # CRLF checkout would make an unchanged add-on look modified.
 * text=auto eol=lf
+# Batch files are read by cmd.exe, which mishandles LF-only lines: CRLF in every checkout.
+*.cmd text eol=crlf
