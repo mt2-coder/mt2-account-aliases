@@ -6,9 +6,9 @@ The launcher names game accounts with generated ids such as `playerg123456789` a
 per page. With dozens of accounts, finding the right one is guesswork. This free add-on lets you
 call them `main`, `buff` or `meley1` instead, right in the launcher's own account list.
 
-[![Watch the 42-second demo on YouTube](https://img.youtube.com/vi/24Nq1rZX88w/maxresdefault.jpg)](https://www.youtube.com/watch?v=24Nq1rZX88w)
+https://github.com/user-attachments/assets/29c72fac-e7bd-4ce5-8bd2-43fdb9114b08
 
-▶ **[Watch the 42-second demo](https://www.youtube.com/watch?v=24Nq1rZX88w)** ·
+▶ **[Watch the demo on YouTube](https://www.youtube.com/watch?v=24Nq1rZX88w)** ·
 ⬇ **[Download the latest version](https://github.com/mt2-coder/mt2-account-aliases/releases/latest)** ·
 free and open source ([MIT](LICENSE))
 

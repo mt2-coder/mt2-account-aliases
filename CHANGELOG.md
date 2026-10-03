@@ -9,9 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **README for players** — the README now opens with a readable title, the 42-second demo video,
-  what the add-on does and why it is safe (it never touches the game and only adds a layer over
-  the launcher's interface), then how to install, uninstall and troubleshoot it. The technical
+- **README for players** — the README now opens with a readable title, the 42-second demo video
+  playing in the page, what the add-on does and why it is safe (it never touches the game and
+  only adds a layer over the launcher's interface), then how to install, uninstall and
+  troubleshoot it. The technical
   part comes last, for contributors and for Gameforge's teams, with notes on building the feature
   into the launcher itself. Players were landing on a page written for developers.
 
