@@ -78,6 +78,9 @@ $Probe = $ProbeOpen +
   'body[data-gf-alias-state]::after{content:"alias: " attr(data-gf-alias-state);background:#00496b}</style>'
 # gfclient.exe holds frontend.pak open; SparkWebHelper.exe are its CEF renderers.
 $LauncherProcesses = 'gfclient', 'SparkWebHelper'
+# Where the launcher's installer and service record its folder (see Find-Pak).
+$LauncherUninstallKey = '{d3b2a0c1-f0d0-4888-ae0b-1c5e1febdafb}_is1'
+$LauncherService = 'GameforgeClientService'
 
 # ---- output (relayed through -LogPath by the elevated relaunch) ----------------
 
@@ -112,23 +115,32 @@ function Find-Pak {
     if (-not (Test-Path -LiteralPath $PakPath -PathType Leaf)) { throw "frontend.pak not found: $PakPath" }
     return (Resolve-Path -LiteralPath $PakPath).ProviderPath
   }
+  # The launcher can be installed in any folder. In order: the folder its installer (Inno Setup)
+  # records in its uninstall entry, the folder of its Windows service, the default folders.
   $roots = New-Object System.Collections.Generic.List[string]
   $keys = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*',
           'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*',
           'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*'
   foreach ($app in @(Get-ItemProperty -Path $keys -ErrorAction SilentlyContinue)) {
     $props = $app.PSObject.Properties
-    if ($props['DisplayName'] -and $app.DisplayName -eq 'Gameforge Client' -and $props['InstallLocation'] -and $app.InstallLocation) {
-      $roots.Add($app.InstallLocation)
-    }
+    $isLauncher = $app.PSChildName -eq $LauncherUninstallKey -or ($props['DisplayName'] -and $app.DisplayName -eq 'Gameforge Client')
+    if ($isLauncher -and $props['InstallLocation'] -and $app.InstallLocation) { $roots.Add($app.InstallLocation) }
   }
-  $roots.Add((Join-Path ${env:ProgramFiles(x86)} 'GameforgeClient'))
-  $roots.Add((Join-Path $env:ProgramFiles 'GameforgeClient'))
+  $service = Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\$LauncherService" -ErrorAction SilentlyContinue
+  if ($service -and $service.PSObject.Properties['ImagePath']) {
+    # "C:\...\gfservice.exe" [arguments], quoted or not.
+    $m = [regex]::Match([Environment]::ExpandEnvironmentVariables([string]$service.ImagePath), '^\s*"?([^"]+?\.exe)', 'IgnoreCase')
+    if ($m.Success) { $roots.Add((Split-Path $m.Groups[1].Value)) }
+  }
+  foreach ($base in ${env:ProgramFiles(x86)}, $env:ProgramFiles) {
+    if ($base) { $roots.Add((Join-Path $base 'GameforgeClient')) }
+  }
   foreach ($root in $roots) {
     $candidate = Join-Path $root 'resources\frontend.pak'
     if (Test-Path -LiteralPath $candidate -PathType Leaf) { return (Resolve-Path -LiteralPath $candidate).ProviderPath }
   }
-  throw 'frontend.pak not found: give its path with -PakPath.'
+  throw ('Gameforge Client not found. Give the path of its frontend.pak with -PakPath, for example from a ' +
+    'command prompt in this folder: Install.cmd -PakPath "D:\Games\GameforgeClient\resources\frontend.pak"')
 }
 
 function Get-LauncherVersion {

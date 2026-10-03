@@ -111,9 +111,13 @@ A Gameforge account carries every game account of its player: nothing here may p
 
 Details, minified module ids and how each fact was found: [docs/launcher-internals.md](docs/launcher-internals.md).
 
-- Installed in `C:\Program Files (x86)\GameforgeClient\` (registry `Uninstall` entry
-  `InstallLocation`). `resources\` gives Users read-only access, so writing needs elevation. The
-  `gfservice.exe` service runs permanently.
+- Installed by default in `C:\Program Files (x86)\GameforgeClient\`, but a player can choose
+  another folder. Its Inno Setup installer records the folder as `InstallLocation` of the
+  uninstall entry `{d3b2a0c1-f0d0-4888-ae0b-1c5e1febdafb}_is1` (`DisplayName` `Gameforge Client`),
+  and the `GameforgeClientService` service runs `gfservice.exe` from it. The installer looks there,
+  in that order, then in the default folders, and otherwise asks for `-PakPath`. Each source was
+  checked alone; an install outside the default folder was not. `resources\` gives Users
+  read-only access, so writing needs elevation. The service runs permanently.
 - `frontend.pak`: 79 entries, all deflate, UTF-8 names, no encryption, data descriptor, extra field
   or comment. `index.html` is a single minified line (1,424 bytes): the remote Pixelzirkus
   `pz.js` (synchronous), two inline Google Tag Manager scripts, the deferred `vendors` and `app`

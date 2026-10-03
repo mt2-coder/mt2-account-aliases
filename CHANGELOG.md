@@ -27,10 +27,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Installer** — `scripts/alias-addon.ps1` with `status`, `install` and `revert`. It keeps a
   verified backup of `frontend.pak`, rewrites the archive byte for byte so that only `index.html`
   changes, swaps the file in one step, relaunches itself through UAC, refuses while the launcher
-  runs, and recognises a pak replaced by a launcher update. It runs on Windows PowerShell 5.1 and
-  PowerShell 7; .NET's ZIP update mode was ruled out because it corrupts an empty entry of the pak
-  under Windows PowerShell 5.1. The elevated relaunch passes `-ExecutionPolicy Bypass`: it does
-  not inherit the caller's policy, and Windows' default policy would otherwise refuse the script.
+  runs, and recognises a pak replaced by a launcher update. It finds the launcher in whatever
+  folder it was installed, from its uninstall entry or its Windows service, and otherwise says how
+  to give the path. It runs on Windows PowerShell 5.1 and PowerShell 7; .NET's ZIP update mode
+  was ruled out because it corrupts an empty entry of the pak under Windows PowerShell 5.1. The
+  elevated relaunch passes `-ExecutionPolicy Bypass`: it does not inherit the caller's policy, and
+  Windows' default policy would otherwise refuse the script.
 - **Diagnostic mode** — `install -Diagnostic` shows, without devtools, whether the launcher displays
   the patched page, runs the script and finds the accounts. It is how the popup was found.
 - **Tests** — unit tests of the pure helpers (`test/logic.test.cjs`) and a look-alike of the
