@@ -1,10 +1,10 @@
 # mt2-account-aliases
 
 Add-on for the Gameforge Client (the launcher) that gives readable aliases to Metin2 game
-accounts. The launcher names the accounts it creates with generated ids such as
-`playerg123456789` and lists them four per page in Settings > Game account, so a player with
-dozens of accounts cannot tell them apart. The add-on attaches an alias to each account and finds
-an account by its alias. Fully local: no server, no database.
+accounts. A game account can never be renamed, and on the Tigerghost server the launcher names
+them with generated ids such as `playerg123456789`; it lists them four per page in Settings > Game
+account, so a player with dozens of accounts cannot tell them apart. The add-on attaches an alias
+to each account and finds an account by its alias. Fully local: no server, no database.
 
 **English is the base language of everything**: code, comments, documentation (`docs/`
 included), the add-on's interface, the installer's messages, examples and test data. No text in
