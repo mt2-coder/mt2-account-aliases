@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-03
+
 ### Added
 
 - **Account aliases in the launcher** — `src/alias-addon.js` puts a pencil next to every account
@@ -48,3 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `README.txt` is their guide. `release/build.py` builds it; the `Release` workflow runs it on
   GitHub, attests the archive's provenance and opens a draft release, so the archive comes from
   the public code and nothing is public before it has been checked.
+
+[Unreleased]: https://github.com/mt2-coder/mt2-account-aliases/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/mt2-coder/mt2-account-aliases/releases/tag/v0.1.0
