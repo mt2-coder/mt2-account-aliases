@@ -64,6 +64,12 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   output through a temporary log, and refuses while a launcher started from that installation is
   running. The relaunch passes `-ExecutionPolicy Bypass`: the elevated session does not inherit
   the caller's policy, and Windows PowerShell's default one (Restricted) refuses every script.
+- **README.** Written for players first: title, the demo video
+  (<https://www.youtube.com/watch?v=24Nq1rZX88w>, on the project's own channel), what the add-on
+  does, why it is safe, install, uninstall, troubleshooting. The technical part comes last, under
+  "For developers and Gameforge's teams", including how the feature could be built into the
+  launcher. Safety claims there stay strictly true: no claim about what the game or its anti-cheat
+  can detect.
 - **Distribution.** Players get a GitHub release, not a clone: a ZIP with `Install.cmd`,
   `Uninstall.cmd`, `Status.cmd`, `README.txt`, `LICENSE`, `scripts/alias-addon.ps1` and
   `src/alias-addon.js`, in the repository's layout so the installer finds the add-on as in a

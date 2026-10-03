@@ -1,65 +1,156 @@
-# mt2-account-aliases
+# Metin2 Account Aliases
 
-An add-on for the **Gameforge Client** (the launcher) that gives readable names to Metin2 game
-accounts. The launcher names the accounts it creates with generated ids such as
-`playerg123456789`; with dozens of them listed four per page, telling them apart is guesswork.
-The add-on attaches an alias to each account and finds an account by its alias, inside the
-launcher's own account list.
+**Give your Metin2 accounts readable names in the Gameforge Client, and find them by name.**
 
-**Status:** works with Gameforge Client 2.8.5.1959 (interface 0.486.2), checked on 2026-10-03; no
-release yet. Unofficial: not affiliated with or endorsed by Gameforge. It modifies one launcher
-file and never touches the game client; use it at your own risk.
+The launcher names game accounts with generated ids such as `playerg123456789` and lists them four
+per page. With dozens of accounts, finding the right one is guesswork. This free add-on lets you
+call them `main`, `buff` or `meley1` instead, right in the launcher's own account list.
 
-Read [CLAUDE.md](CLAUDE.md) before changing anything: frozen decisions, verified facts about the
-launcher, hard rules and known traps.
+[![Watch the 42-second demo on YouTube](https://img.youtube.com/vi/24Nq1rZX88w/maxresdefault.jpg)](https://www.youtube.com/watch?v=24Nq1rZX88w)
+
+▶ **[Watch the 42-second demo](https://www.youtube.com/watch?v=24Nq1rZX88w)** ·
+⬇ **[Download the latest version](https://github.com/mt2-coder/mt2-account-aliases/releases/latest)** ·
+free and open source ([MIT](LICENSE))
+
+> Unofficial add-on: not affiliated with or endorsed by Gameforge.
 
 ## What it does
 
-In **Settings > Game account**:
+In the launcher, **Settings > Game account**:
 
-- a pencil next to each account name opens a small editor: Enter saves, Escape or a click outside
-  cancels, an empty alias removes it;
-- an account with an alias shows the alias followed by its id in small grey type; aliases longer
-  than 20 characters are cut on screen and shown whole in the tooltip;
-- the launcher's own search (the magnifier above the table) also finds accounts by alias, and its
-  pagination keeps working;
-- the **Manage** button, bottom right, lists every alias as JSON: copy it to keep a backup, paste
-  it and press **Apply** to restore it or to move the aliases to another PC.
+- **Name your accounts.** The pencil next to an account name gives it an alias: Enter saves,
+  Escape cancels, an empty alias removes it. The alias comes first, the real name next to it in
+  small grey type; a long alias is cut on screen and shown whole in the tooltip.
+- **Find them by name.** The launcher's own search box (the magnifier above the table) also finds
+  accounts by alias, and its pages keep working.
+- **Keep a backup.** The **Manage** button, bottom right, shows all your aliases as text: copy it
+  to keep a backup, or paste it and press **Apply** to restore it or move your aliases to another
+  PC.
 
-Aliases are stored by the launcher's embedded browser (`localStorage`), on this PC only. They
-survive reinstalling the add-on; anything that clears the launcher's web data would lose them, so
-keep a JSON backup.
+## Is it safe?
 
-## How it works
+The add-on is built around one rule: never put your game or your account at risk.
 
-The launcher's interface is a web app packed in `resources\frontend.pak`, a plain ZIP. The
-installer backs that file up, then inlines [`src/alias-addon.js`](src/alias-addon.js) as a
-`<script>` at the end of its `index.html`. The Settings window is a popup that the main page opens
-and fills by itself, so the add-on intercepts `window.open` to reach it.
+- **It never touches the game.** Not `metin2client.exe`, not a single file of the game, not its
+  anti-cheat. Nothing runs inside the game.
+- **It is only a layer over the launcher's window.** The launcher's interface is a web page stored
+  in one file, `resources\frontend.pak`. The add-on adds a small script to that page and nothing
+  else: the launcher's program, and the way it starts the game, stay exactly the same.
+- **Your account is left alone.** Aliases exist on your PC only: your real account names never
+  change, neither on your PC nor on Gameforge's servers. The add-on makes no network request at
+  all and never reads your password, your session or your account data; it only reads the account
+  names already on screen.
+- **You can undo it at any time.** The installer backs up the launcher's file before changing it,
+  and `Uninstall.cmd` puts the original back, byte for byte.
+- **Nothing is hidden.** No `.exe`: the add-on is one JavaScript file you can read,
+  [`src/alias-addon.js`](src/alias-addon.js), and the installer one PowerShell script,
+  [`scripts/alias-addon.ps1`](scripts/alias-addon.ps1). Each release is built by GitHub from this
+  public code and comes with its SHA-256 and a
+  [provenance attestation](https://github.com/mt2-coder/mt2-account-aliases/attestations).
 
-The add-on makes **no network request**, never reads the session token, cookies or account data,
-reads only the account names already on screen, and only adds attributes and its own overlay to
-the page. That one file is the whole trust surface.
+The add-on is free software under the MIT licence, which means it comes without warranty.
 
 ## Install
 
-Requirements: Windows 10 or 11, the Gameforge Client and administrator rights. `frontend.pak`
-sits under `Program Files`, so installing and uninstalling ask for elevation (a UAC prompt).
+You need Windows 10 or 11, the Gameforge Client and administrator rights.
 
-1. Download the archive of the [latest release](https://github.com/mt2-coder/mt2-account-aliases/releases/latest)
-   and extract it.
-2. Close your Metin2 clients, then **close the launcher completely**, including its
-   notification-area icon.
-3. Double-click `Install.cmd`. `Uninstall.cmd` restores the original `frontend.pak` byte for
-   byte, and `Status.cmd` reports what is installed without changing anything.
+1. Download `mt2-account-aliases-x.y.z.zip` from the
+   [latest release](https://github.com/mt2-coder/mt2-account-aliases/releases/latest).
+2. Right-click the ZIP > **Properties** > tick **Unblock** > **OK**, then extract it. Otherwise
+   Windows asks for confirmation each time you run one of its `.cmd` files, because they are not
+   digitally signed.
+3. Close your Metin2 clients, then close the Gameforge Client completely, including its icon in the
+   notification area.
+4. Double-click **`Install.cmd`** and click **Yes** in the Windows prompt (UAC): the launcher's
+   files sit under `Program Files`, so changing one needs administrator rights.
+5. Start the launcher and open **Settings > Game account**.
 
-The archive's `README.txt` is the players' guide. The `.cmd` files only start the installer,
-`scripts/alias-addon.ps1`, with Windows PowerShell 5.1 and `-ExecutionPolicy Bypass`; extra
-arguments go through (`Install.cmd -Diagnostic`).
+The installer finds the launcher wherever it is installed. Checked with Gameforge Client
+2.8.5.1959 (interface 0.486.2).
+
+Your aliases are kept by the launcher, on this PC only. Anything that clears the launcher's data
+would lose them, so keep a backup with **Manage**.
+
+## Uninstall
+
+Close the launcher, then double-click **`Uninstall.cmd`**: the launcher's original file comes back,
+byte for byte. Your aliases stay stored in the launcher, so installing again brings them back.
+
+## When the launcher updates its interface
+
+The launcher cannot update an interface that the add-on has modified. When it announces an update,
+or says it could not apply one:
+
+1. close it, then double-click `Uninstall.cmd`;
+2. start the launcher, let it update, then close it;
+3. double-click `Install.cmd` again.
+
+## Troubleshooting
+
+- **What is installed?** `Status.cmd` tells you, and changes nothing.
+- **"Gameforge Client not found".** Open a command prompt in the extracted folder (type `cmd` in
+  File Explorer's address bar, then Enter) and give the path of the launcher's `frontend.pak`:
+  `Install.cmd -PakPath "D:\Games\GameforgeClient\resources\frontend.pak"`.
+- **No pencils in the account list.** Run `Install.cmd -Diagnostic` the same way. A small label
+  appears at the bottom left of the launcher's main window and says how far the add-on got:
+
+  | Label | Meaning |
+  | --- | --- |
+  | none at all | the launcher did not display the modified page |
+  | red, `script did not run` | the page is displayed, but the add-on never ran |
+  | `active - no account on screen`, with the account list open | the add-on runs but finds no account |
+  | `active - 4 account(s) on screen (2 windows)` | the account list is found and decorated |
+  | `... error (...): ...` | the message says what failed |
+
+  `Install.cmd` without `-Diagnostic` removes the label.
+- **The launcher switched to another language.** The add-on has nothing to do with it: the globe
+  icon at the top right of the launcher sets it back.
+
+---
+
+## For developers and Gameforge's teams
+
+Everything below is technical. It is meant for contributors, and for Gameforge's teams should they
+want to offer this feature in the launcher itself, where it would need no add-on at all. Read
+[CLAUDE.md](CLAUDE.md) before changing anything: frozen decisions, verified facts about the
+launcher, hard rules and known traps.
+
+### How it works
+
+The launcher's interface is a web app packed in `resources\frontend.pak`, a plain ZIP. The
+installer backs that file up, then inlines [`src/alias-addon.js`](src/alias-addon.js) as a
+`<script>` at the end of its `index.html`, between marker comments. The Settings window is a popup
+that the main page opens and fills by itself, so the add-on intercepts `window.open` to reach it.
+
+The add-on makes no network request, never reads the session token, cookies or account data,
+reads only the account names already on screen, and only adds attributes and its own overlay to
+the page: it never writes into the nodes React owns. That one file is the whole trust surface.
+
+`install` keeps the untouched original next to it as `frontend.pak.alias-backup`, rewrites the
+archive so that only `index.html` changes, checks that every other entry is unchanged, then swaps
+the file in one step. The launcher patches `frontend.pak` with binary deltas (xdelta3), which
+cannot apply to a modified file: hence the uninstall, update, install sequence above.
+
+### Building it into the launcher
+
+The launcher already has what the feature needs; [docs/launcher-internals.md](docs/launcher-internals.md)
+details it.
+
+- **Where.** The game account table (`Br.DataTable`, `pageSize: 4`) renders each name in a
+  `DataTable.Cell` with `id="QA_MenuSettings_GameAccount_Selection"` and `value=displayName`.
+- **Search.** `filterRows` tests `new RegExp(filterValue, "i")` against each cell's `value`.
+  Matching aliases too is what the add-on emulates: it hands the search
+  `<query>|^(<ids whose alias matches>)$`.
+- **Storage.** An alias is the player's own label for one game account and never replaces its
+  real name. The add-on keeps a `{ "<id>": "<alias>" }` map in the launcher's local storage; a
+  native version could keep it with the Gameforge account, so that it follows the player from PC
+  to PC.
+- **Display.** Alias first, id next to it as secondary text, on a single line: the Settings window
+  has a fixed size, and taller rows make it scroll.
 
 ### From a clone
 
-The same `.cmd` files are in [`release/`](release/), or call the installer directly, with Windows
+The `.cmd` files are in [`release/`](release/), or call the installer directly, with Windows
 PowerShell 5.1 or PowerShell 7:
 
 ```powershell
@@ -70,58 +161,10 @@ PowerShell 5.1 or PowerShell 7:
 
 If script execution is blocked on the machine, run
 `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\alias-addon.ps1 install`.
+`-PakPath` points the script at another copy of `frontend.pak`, and `-AddonPath` at another add-on
+file; both are how it is tested.
 
-`install` keeps the untouched original next to it as `frontend.pak.alias-backup`, writes the
-patched file aside, checks that every other file in the archive is unchanged, then swaps it in
-one step. `-PakPath` points the script at another copy of `frontend.pak`, and `-AddonPath` at
-another add-on file; both are how it is tested.
-
-### When the launcher updates its interface
-
-The launcher patches `frontend.pak` with binary deltas (xdelta3), which cannot apply to a modified
-file. When it announces an interface update, or reports that it could not apply one:
-
-1. close the launcher and run `revert` (`Uninstall.cmd`);
-2. start the launcher, let it update, then close it;
-3. run `install` (`Install.cmd`) again.
-
-`status` reports a backup that no longer matches the current file, which is what a launcher
-update leaves behind; `install` then replaces it with a fresh one.
-
-### Troubleshooting
-
-`install -Diagnostic` adds a small label at the bottom left of the launcher's main window, saying
-how far the add-on got in every window it follows:
-
-| Label | Meaning |
-| --- | --- |
-| none at all | the launcher did not display the patched `index.html` |
-| red, `script did not run` | the patched page is displayed, but its script never ran |
-| `active - no account on screen`, with the account list open | the script runs but finds no account cell |
-| `active - 4 account(s) on screen (2 windows)` | the account list is found and decorated |
-| `... error (...): ...` | the message says what failed |
-
-`install` without the switch removes the label.
-
-If the launcher's interface changes language after you log in again, the add-on has nothing to do
-with it: the globe icon at the top right of the launcher sets it back.
-
-## Layout
-
-| Path | Content |
-| --- | --- |
-| [`src/alias-addon.js`](src/alias-addon.js) | the add-on, the only code that runs inside the launcher |
-| [`scripts/alias-addon.ps1`](scripts/alias-addon.ps1) | the installer: `status`, `install`, `revert`, `-Diagnostic` |
-| [`test/logic.test.cjs`](test/logic.test.cjs) | unit tests of the add-on's pure helpers, for Node |
-| [`test/mock-launcher.html`](test/mock-launcher.html) | look-alike of the launcher's Settings popup, to run the add-on in a browser |
-| [`release/`](release/) | what the players' archive adds (`.cmd` files, `README.txt`) and `build.py`, which builds it |
-| [`.github/workflows/release.yml`](.github/workflows/release.yml) | builds the archive on GitHub and opens a draft release |
-| [`docs/`](docs/) | how the launcher works, as far as the add-on is concerned |
-| [`CLAUDE.md`](CLAUDE.md) | context, frozen decisions, rules and traps: read it first |
-| [`CHANGELOG.md`](CHANGELOG.md) | what changed, and why |
-| [`LICENSE`](LICENSE) | the MIT licence |
-
-## Tests
+### Tests
 
 ```powershell
 node test\logic.test.cjs
@@ -136,7 +179,7 @@ page; [CLAUDE.md](CLAUDE.md#testing) describes the headless run and how the inst
 A change to the installer is tested against a copy of `frontend.pak` (`-PakPath`) before it goes
 anywhere near the real launcher.
 
-## Releasing
+### Releasing
 
 1. In `CHANGELOG.md`, turn `## [Unreleased]` into `## [x.y.z] - <date>`, open a new empty
    `## [Unreleased]` above it, update the links at the bottom, and commit
@@ -149,6 +192,21 @@ anywhere near the real launcher.
 
 To check the archive locally: `python release/build.py x.y.z dist` (the version needs its
 changelog section).
+
+### Layout
+
+| Path | Content |
+| --- | --- |
+| [`src/alias-addon.js`](src/alias-addon.js) | the add-on, the only code that runs inside the launcher |
+| [`scripts/alias-addon.ps1`](scripts/alias-addon.ps1) | the installer: `status`, `install`, `revert`, `-Diagnostic` |
+| [`release/`](release/) | what the players' archive adds (`.cmd` files, `README.txt`) and `build.py`, which builds it |
+| [`.github/workflows/release.yml`](.github/workflows/release.yml) | builds the archive on GitHub and opens a draft release |
+| [`test/logic.test.cjs`](test/logic.test.cjs) | unit tests of the add-on's pure helpers, for Node |
+| [`test/mock-launcher.html`](test/mock-launcher.html) | look-alike of the launcher's Settings popup, to run the add-on in a browser |
+| [`docs/`](docs/) | how the launcher works, as far as the add-on is concerned |
+| [`CLAUDE.md`](CLAUDE.md) | context, frozen decisions, rules and traps: read it first |
+| [`CHANGELOG.md`](CHANGELOG.md) | what changed, and why |
+| [`LICENSE`](LICENSE) | the MIT licence |
 
 ## Licence
 
