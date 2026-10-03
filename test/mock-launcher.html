@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mock launcher - account table</title>
+<style>
+  /* A rough copy of the Gameforge Client account table, enough to exercise the
+     add-on in a normal browser without touching the real launcher. Like the launcher,
+     the list opens in a popup that this page fills, and these styles get mirrored into it. */
+  body { background:#001a2b; color:#cfe3ef; font:14px/1.4 sans-serif; padding:24px; }
+  h1 { font-size:1rem; color:#00b5fc; }
+  .open { background:#00496b; border:0; color:#fff; border-radius:4px; padding:6px 14px; cursor:pointer; }
+  table { background:#0a1827; border-collapse:collapse; width:520px; font-size:.875rem; }
+  thead.filterBar th { text-align:right; padding:14px 12px; }
+  thead.filterBar input { background:#002638; border:1px solid #00496b; color:#fff;
+    border-radius:4px; padding:5px 8px; }
+  thead tr.head th { text-align:left; padding:8px 16px; color:#8fb3c6; border-bottom:1px solid #013049; }
+  tbody tr { background:#002638; }
+  tbody tr:hover { background:#00496b; }
+  tbody td { padding:.6rem 1rem; border-bottom:1px solid #01202f; }
+  tbody td:first-child { text-align:center; color:#00b5fc; }
+  .pager { margin-top:10px; display:flex; gap:8px; align-items:center; }
+  .pager button { background:#00496b; border:0; color:#fff; border-radius:4px; padding:4px 10px; cursor:pointer; }
+  .hint { margin-top:18px; max-width:520px; color:#7f97a6; font-size:.8rem; }
+  #result { color:#59d185; font-size:.75rem; white-space:pre-wrap; }
+</style>
+<script>
+  // Self-test mode (?auto): seed one alias before the add-on loads its store.
+  if (/[?&]auto\b/.test(location.search)) {
+    localStorage.setItem("gfAliasAddon.v1", JSON.stringify({
+      playerg123456789: "Meley Warrior",
+      playerg987654321: "A very long description of this account" // shown cut, row height kept
+    }));
+  }
+</script>
+</head>
+<body>
+  <h1>Mock launcher &mdash; main window</h1>
+  <button id="settings" class="open">Settings</button>
+  <p class="hint">
+    Like the real launcher, &ldquo;Settings&rdquo; opens the account list in a separate
+    window (window.open("", "popup")) that this page fills. In that window, click the blue
+    pencil at the right of a name to give it an alias; the table's search box also finds
+    accounts by alias. Aliases are saved in this page's localStorage.
+  </p>
+  <pre id="result"></pre>
+
+<!-- the add-on, exactly as it is injected into the real launcher: at the end of <body>,
+     before the launcher's own (deferred) scripts run -->
+<script src="../src/alias-addon.js"></script>
+<script>
+  // ---- fake data + stock-like table behaviour (regex filter + 4 per page) ---
+  var ACCOUNTS = [
+    "playerg123456789","playerg987654321","playergf","playergf2",
+    "playerg100200300","playerg445566778","playerg778899001","playerg223344556",
+    "playerg667788990","playerg135792468","playerg246813579","playerg999000111"
+  ].map(function (n, i) { return { name: n, last: (i + 1) + " days ago" }; });
+
+  var PAGE_SIZE = 4;
+
+  function filtered(filter) {
+    if (!filter) return ACCOUNTS;
+    var rx;
+    try { rx = new RegExp(filter, "i"); } catch (e) { return ACCOUNTS; }
+    return ACCOUNTS.filter(function (a) { return rx.test(a.name); });
+  }
+
+  function render(doc, state) {
+    var list = filtered(state.filter);
+    var pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+    if (state.page > pages - 1) state.page = pages - 1;
+    var tb = doc.getElementById("rows");
+    tb.textContent = "";
+    list.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE).forEach(function (a) {
+      var tr = doc.createElement("tr");
+      var c0 = doc.createElement("td"); c0.textContent = "▶";
+      var c1 = doc.createElement("td");
+      c1.id = "QA_MenuSettings_GameAccount_Selection"; // same id the launcher reuses
+      c1.textContent = a.name;
+      var c2 = doc.createElement("td"); c2.textContent = a.last;
+      tr.appendChild(c0); tr.appendChild(c1); tr.appendChild(c2);
+      tb.appendChild(tr);
+    });
+    doc.getElementById("page").textContent = (state.page + 1) + " / " + pages;
+  }
+
+  // Same steps as the launcher's popup modal (createPopup + mirrorStyles + portal): open a
+  // blank popup, copy this page's <head> styles into it, then render into it from here.
+  function openSettings() {
+    var popup = window.open("", "popup", "width=600,height=420");
+    if (!popup) return null;
+    var doc = popup.document;
+    Array.prototype.forEach.call(document.querySelectorAll("head > style, head > meta, head > link"), function (n) {
+      doc.head.appendChild(doc.importNode(n, true));
+    });
+    var root = doc.createElement("div");
+    root.id = "root";
+    root.innerHTML =
+      '<table><thead class="filterBar"><tr><th colspan="3">' +
+      '<input id="filter" type="text" placeholder="search (regex, like the launcher)" /></th></tr>' +
+      '<tr class="head"><th></th><th>Game account name</th><th>Last played</th></tr></thead>' +
+      '<tbody id="rows"></tbody></table>' +
+      '<div class="pager"><button id="prev">&lt;</button><span id="page"></span><button id="next">&gt;</button></div>';
+    doc.body.appendChild(root);
+    var state = { page: 0, filter: "" };
+    // Like React: listeners delegated on the popup's document, not on the input itself.
+    doc.addEventListener("input", function (e) {
+      if (e.target.id !== "filter") return;
+      state.filter = e.target.value;
+      state.page = 0;
+      render(doc, state);
+    });
+    doc.addEventListener("click", function (e) {
+      if (e.target.id === "prev" && state.page > 0) { state.page--; render(doc, state); }
+      else if (e.target.id === "next") { state.page++; render(doc, state); }
+    });
+    render(doc, state);
+    return popup;
+  }
+
+  document.getElementById("settings").addEventListener("click", openSettings);
+
+  // ---- self-test (?auto): open the popup, check the add-on decorated it, search by alias
+  if (/[?&]auto\b/.test(location.search)) {
+    window.addEventListener("load", function () {
+      var result = document.getElementById("result");
+      var popup = openSettings();
+      if (!popup) { result.textContent = JSON.stringify({ error: "popup blocked" }); return; }
+      setTimeout(function () {
+        var doc = popup.document;
+        var cell = doc.querySelector('td[id="QA_MenuSettings_GameAccount_Selection"]');
+        var bar = doc.getElementById("gf-alias-bar");
+        var out = {
+          state: document.body.getAttribute("data-gf-alias-state"),
+          styleInPopup: !!doc.getElementById("gf-alias-style"),
+          pencils: doc.querySelectorAll(".gf-alias-pencil svg").length,
+          bar: !!bar,
+          barSpacingPx: bar ? Math.round(bar.children[1].getBoundingClientRect().left - bar.children[0].getBoundingClientRect().right) : null,
+          firstCellAlias: cell && cell.getAttribute("data-gf-alias"),
+          // An alias must not make its row taller (the launcher's popup has a fixed size).
+          rowHeights: Array.prototype.map.call(doc.querySelectorAll("#rows tr"), function (tr) {
+            return Math.round(tr.getBoundingClientRect().height);
+          })
+        };
+        // Type "meley" in the table's search box, as a user would.
+        var input = doc.getElementById("filter");
+        Object.getOwnPropertyDescriptor(popup.HTMLInputElement.prototype, "value").set.call(input, "meley");
+        input.dispatchEvent(new popup.Event("input", { bubbles: true }));
+        setTimeout(function () {
+          out.rowsForMeley = Array.prototype.map.call(
+            doc.querySelectorAll('td[id="QA_MenuSettings_GameAccount_Selection"]'),
+            function (td) { return td.getAttribute("data-gf-orig") || td.textContent; });
+          out.searchBoxShows = input.value;
+          result.textContent = JSON.stringify(out);
+          popup.close();
+          // Test harness only (not the add-on): when served locally, hand the result to the
+          // server log, for headless runs.
+          if (location.protocol !== "file:") new Image().src = "/__result?" + encodeURIComponent(result.textContent);
+        }, 400);
+      }, 900);
+    });
+  }
+</script>
+</body>
+</html>

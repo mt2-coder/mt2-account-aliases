@@ -1,0 +1,9 @@
+# Copies of the launcher's interface package used to test the installer (-PakPath), and the
+# backup and temporary files it writes next to them: Gameforge's files, never committed.
+*.pak
+*.pak.alias-backup
+*.pak.alias-tmp
+*.pak.update
+
+# Personal notes for Claude Code on one machine: private context, never published.
+CLAUDE.local.md

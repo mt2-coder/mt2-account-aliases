@@ -1,0 +1,4 @@
+# LF in the repository and in every checkout, whatever core.autocrlf says. The installer records
+# the add-on's sha256 in the launcher's index.html and compares it with src/alias-addon.js: a
+# CRLF checkout would make an unchanged add-on look modified.
+* text=auto eol=lf
