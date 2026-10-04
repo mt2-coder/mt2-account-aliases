@@ -1,6 +1,7 @@
 # Metin2 Account Aliases
 
-[English](README.md) · **Deutsch**
+[English](README.md) · **Deutsch** · [Español](README.es.md) · [Français](README.fr.md) ·
+[Italiano](README.it.md) · [Português](README.pt.md) · [Română](README.ro.md) · [Türkçe](README.tr.md)
 
 *Übersetzung der [englischen Fassung](README.md), Stand: 4. Oktober 2026. Bei Abweichungen gilt
 die englische Fassung.*

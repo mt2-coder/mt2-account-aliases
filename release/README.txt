@@ -3,7 +3,14 @@ mt2-account-aliases
 
 Readable aliases for your Metin2 game accounts in the Gameforge Client.
 
-Auf Deutsch: https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.de.md
+The online guide in other languages:
+  de  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.de.md
+  es  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.es.md
+  fr  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.fr.md
+  it  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.it.md
+  pt  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.pt.md
+  ro  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.ro.md
+  tr  https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.tr.md
 
 Unofficial: not affiliated with or endorsed by Gameforge. It modifies one file of the launcher
 and never touches the game client. Use it at your own risk.

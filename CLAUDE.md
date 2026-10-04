@@ -72,12 +72,14 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   GitHub strips YouTube players and YouTube's thumbnail URLs change with the thumbnail; the
   YouTube copy (<https://www.youtube.com/watch?v=24Nq1rZX88w>, on the project's own channel) is
   linked right below it.
-- **README translations.** One file per language, `README.<code>.md` (so far `README.de.md`),
-  linked from a language line under every README's title. A translation covers the player part
+- **README translations.** One file per language, `README.<code>.md` (`de`, `es`, `fr`, `it`,
+  `pt`, `ro`, `tr`), linked from a language line under every README's title. A translation covers the player part
   only and ends with a link to the English technical part; it gives the date of the English text
   it translates and says that the English text prevails. Menus are named with the launcher's own
-  labels in that language (in its locale chunks, e.g. German "Einstellungen > Spielaccount"); the
-  add-on's buttons and the installer's messages stay in English and are quoted as such. A change
+  labels in that language (in its locale chunks, e.g. German "Einstellungen > Spielaccount") and
+  with the launcher's register: `vous` in French, the familiar form elsewhere. Portuguese is
+  European, with the Brazilian launcher's labels given next to them. The add-on's buttons and the
+  installer's messages stay in English and are quoted as such. A change
   to the player part of `README.md` is carried into every translation, with its date, in the same
   commit. Safety claims never say more than the English ones. `release/README.txt` stays English
   and links to the translations.

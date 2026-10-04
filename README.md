@@ -1,6 +1,7 @@
 # Metin2 Account Aliases
 
-**English** · [Deutsch](README.de.md)
+**English** · [Deutsch](README.de.md) · [Español](README.es.md) · [Français](README.fr.md) ·
+[Italiano](README.it.md) · [Português](README.pt.md) · [Română](README.ro.md) · [Türkçe](README.tr.md)
 
 **Give your Metin2 accounts readable names in the Gameforge Client, and find them by name.**
 

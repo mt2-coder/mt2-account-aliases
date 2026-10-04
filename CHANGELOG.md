@@ -9,13 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **German README** — `README.de.md` translates the part of the README written for players (what
-  the add-on does, why it is safe, install, uninstall, troubleshooting) and links to the English
-  developer part, so that German-speaking players can read it in their language. It gives the
-  date of the English text it translates, and the English text prevails. `README.md` links to it,
-  and so does the archive's `README.txt`, which stays in English. The German text uses the
-  launcher's own German labels (Einstellungen > Spielaccount) and says that the add-on's buttons
-  and the installer's messages are in English.
+- **README in seven more languages** — `README.de.md`, `README.es.md`, `README.fr.md`,
+  `README.it.md`, `README.pt.md`, `README.ro.md` and `README.tr.md` translate the part of the
+  README written for players (what the add-on does, why it is safe, install, uninstall,
+  troubleshooting) and link to the English developer part, so that players can read it in their
+  own language. Each gives the date of the English text it translates, and the English text
+  prevails. A language line under every README's title links them together, and the archive's
+  `README.txt`, which stays in English, lists them. The translations name the launcher's menus
+  with its own labels in that language (Einstellungen > Spielaccount, Paramètres > Compte de jeu…)
+  and say that the add-on's buttons and the installer's messages are in English.
 
 ### Changed
 
