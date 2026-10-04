@@ -7,10 +7,10 @@ account, so a player with dozens of accounts cannot tell them apart. The add-on 
 to each account and finds an account by its alias. Fully local: no server, no database.
 
 **English is the base language of everything**: code, comments, documentation (`docs/`
-included), the add-on's interface, the installer's messages, examples and test data. No text in
-another language, anywhere. Other languages may come later, as translations of the English text;
-English stays the default. Commits follow Conventional Commits; `CHANGELOG.md` follows Keep a
-Changelog and is updated with every change.
+included), the add-on's interface, the installer's messages, examples and test data. Other
+languages only come as translations of the English text, and English stays the default and
+prevails; so far, only the README is translated (see README below). Commits follow Conventional
+Commits; `CHANGELOG.md` follows Keep a Changelog and is updated with every change.
 
 Line endings are LF in every checkout (`.gitattributes`): `status` compares the add-on's sha256
 with the one recorded in the launcher, and Git for Windows' default `core.autocrlf=true` would make
@@ -72,6 +72,15 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   GitHub strips YouTube players and YouTube's thumbnail URLs change with the thumbnail; the
   YouTube copy (<https://www.youtube.com/watch?v=24Nq1rZX88w>, on the project's own channel) is
   linked right below it.
+- **README translations.** One file per language, `README.<code>.md` (so far `README.de.md`),
+  linked from a language line under every README's title. A translation covers the player part
+  only and ends with a link to the English technical part; it gives the date of the English text
+  it translates and says that the English text prevails. Menus are named with the launcher's own
+  labels in that language (in its locale chunks, e.g. German "Einstellungen > Spielaccount"); the
+  add-on's buttons and the installer's messages stay in English and are quoted as such. A change
+  to the player part of `README.md` is carried into every translation, with its date, in the same
+  commit. Safety claims never say more than the English ones. `release/README.txt` stays English
+  and links to the translations.
 - **Distribution.** Players get a GitHub release, not a clone: a ZIP with `Install.cmd`,
   `Uninstall.cmd`, `Status.cmd`, `README.txt`, `LICENSE`, `scripts/alias-addon.ps1` and
   `src/alias-addon.js`, in the repository's layout so the installer finds the add-on as in a

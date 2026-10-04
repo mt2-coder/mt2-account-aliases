@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **German README** — `README.de.md` translates the part of the README written for players (what
+  the add-on does, why it is safe, install, uninstall, troubleshooting) and links to the English
+  developer part, so that German-speaking players can read it in their language. It gives the
+  date of the English text it translates, and the English text prevails. `README.md` links to it,
+  and so does the archive's `README.txt`, which stays in English. The German text uses the
+  launcher's own German labels (Einstellungen > Spielaccount) and says that the add-on's buttons
+  and the installer's messages are in English.
+
 ### Changed
 
 - **README for players** — the README now opens with a readable title, the 42-second demo video

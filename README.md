@@ -1,5 +1,7 @@
 # Metin2 Account Aliases
 
+**English** · [Deutsch](README.de.md)
+
 **Give your Metin2 accounts readable names in the Gameforge Client, and find them by name.**
 
 A game account can never be renamed, and on the Tigerghost server the launcher even names them

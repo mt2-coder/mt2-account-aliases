@@ -3,6 +3,8 @@ mt2-account-aliases
 
 Readable aliases for your Metin2 game accounts in the Gameforge Client.
 
+Auf Deutsch: https://github.com/mt2-coder/mt2-account-aliases/blob/main/README.de.md
+
 Unofficial: not affiliated with or endorsed by Gameforge. It modifies one file of the launcher
 and never touches the game client. Use it at your own risk.
 
