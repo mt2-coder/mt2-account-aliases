@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `README.txt`, which stays in English, lists them. The translations name the launcher's menus
   with its own labels in that language (Einstellungen > Spielaccount, Paramètres > Compte de jeu…)
   and say that the add-on's buttons and the installer's messages are in English.
+- **Translated guides linked from the release notes** — the notes of every release open with a
+  line linking to each README translation, since GitHub shows a single text per release and the
+  rest of it stays in English. `release/build.py` refuses to build when its `TRANSLATIONS` list,
+  the `README.<code>.md` files and the links in `README.txt` disagree, so that a new translation
+  cannot be left out.
 
 ### Changed
 

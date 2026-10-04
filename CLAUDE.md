@@ -82,7 +82,7 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   installer's messages stay in English and are quoted as such. A change
   to the player part of `README.md` is carried into every translation, with its date, in the same
   commit. Safety claims never say more than the English ones. `release/README.txt` stays English
-  and links to the translations.
+  and links to the translations, as do the release notes.
 - **Distribution.** Players get a GitHub release, not a clone: a ZIP with `Install.cmd`,
   `Uninstall.cmd`, `Status.cmd`, `README.txt`, `LICENSE`, `scripts/alias-addon.ps1` and
   `src/alias-addon.js`, in the repository's layout so the installer finds the add-on as in a
@@ -91,7 +91,9 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   archive or, from `release/`, in a clone. `release/build.py` builds the ZIP; the
   `.github/workflows/release.yml` workflow, started by hand on `main`, runs it on GitHub, attests
   the archive's provenance and opens a **draft** release whose tag is only created when the draft
-  is published. Built on GitHub rather than on a PC, so no local file (`CLAUDE.local.md`, a pak
+  is published. The notes open with a line linking to every README translation (`TRANSLATIONS`
+  in `build.py`, which refuses to build when that list, the `README.<code>.md` files and the links
+  in `README.txt` disagree); the rest stays in English. Built on GitHub rather than on a PC, so no local file (`CLAUDE.local.md`, a pak
   copy) can slip in. No code signing: a certificate costs money and ties the project to a
   verified legal identity; the files stay plain text that anyone can read.
 - **Diagnostics without devtools.** The add-on publishes its state, summed over all its windows,

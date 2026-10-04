@@ -30,7 +30,21 @@ FILES = [
 # and the installer keep their exact bytes: the installer compares the add-on's sha256.
 WINDOWS_TEXT = {"Install.cmd", "Uninstall.cmd", "Status.cmd", "README.txt", "LICENSE"}
 
-NOTES = """## What's in this version
+# README translations, linked from the top of the release notes: (code, name in that language).
+# Every README.<code>.md is listed here, and release/README.txt links to each of them.
+TRANSLATIONS = [
+    ("de", "Deutsch"),
+    ("es", "Español"),
+    ("fr", "Français"),
+    ("it", "Italiano"),
+    ("pt", "Português"),
+    ("ro", "Română"),
+    ("tr", "Türkçe"),
+]
+
+NOTES = """**Install guide in your language:** {translations}
+
+## What's in this version
 
 {changes}
 
@@ -69,6 +83,22 @@ def changelog_section(version):
     return match.group(1).strip()
 
 
+def translation_url(code):
+    return "https://github.com/%s/blob/main/README.%s.md" % (REPOSITORY, code)
+
+
+def translations_line():
+    listed = sorted(code for code, _ in TRANSLATIONS)
+    on_disk = sorted(p.name[len("README."):-len(".md")] for p in ROOT.glob("README.*.md"))
+    if listed != on_disk:
+        fail("TRANSLATIONS lists %s, but the README translations are %s" % (listed, on_disk))
+    guide = (ROOT / "release/README.txt").read_text(encoding="utf-8")
+    missing = ["README.%s.md" % code for code in listed if translation_url(code) not in guide]
+    if missing:
+        fail("release/README.txt does not link to %s" % ", ".join(missing))
+    return " · ".join("[%s](%s)" % (name, translation_url(code)) for code, name in TRANSLATIONS)
+
+
 def current_commit():
     if os.environ.get("GITHUB_SHA"):
         return os.environ["GITHUB_SHA"]
@@ -84,6 +114,7 @@ def main():
     if not re.fullmatch(r"\d+\.\d+\.\d+", version):
         fail("the version must look like 1.2.3, not %r" % version)
     changes = changelog_section(version)
+    translations = translations_line()
 
     name = "mt2-account-aliases-" + version
     out.mkdir(parents=True, exist_ok=True)
@@ -102,7 +133,12 @@ def main():
     digest = hashlib.sha256(archive.read_bytes()).hexdigest()
     (out / (name + ".zip.sha256")).write_text("%s  %s.zip\n" % (digest, name), encoding="ascii")
     notes = NOTES.format(
-        changes=changes, name=name, digest=digest, commit=current_commit(), repository=REPOSITORY
+        translations=translations,
+        changes=changes,
+        name=name,
+        digest=digest,
+        commit=current_commit(),
+        repository=REPOSITORY,
     )
     (out / "release-notes.md").write_text(notes, encoding="utf-8")
     print("%s  %s" % (digest, archive))
