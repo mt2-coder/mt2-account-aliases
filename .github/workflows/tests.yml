@@ -1,0 +1,23 @@
+name: Tests
+
+# Runs the unit tests of the add-on's pure helpers on every push to main and every pull request.
+# Its badge is at the top of every README.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions: {}
+
+jobs:
+  unit:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read # check out the repository
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Run the unit tests
+        run: node test/logic.test.cjs

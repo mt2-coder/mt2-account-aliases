@@ -3,6 +3,11 @@
 [English](README.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Français](README.fr.md) ·
 [Italiano](README.it.md) · **Português** · [Română](README.ro.md) · [Türkçe](README.tr.md)
 
+[![Latest release](https://img.shields.io/github/v/release/mt2-coder/mt2-account-aliases)](https://github.com/mt2-coder/mt2-account-aliases/releases/latest)
+[![License: MIT](https://img.shields.io/github/license/mt2-coder/mt2-account-aliases)](LICENSE)
+[![Tests](https://github.com/mt2-coder/mt2-account-aliases/actions/workflows/tests.yml/badge.svg)](https://github.com/mt2-coder/mt2-account-aliases/actions/workflows/tests.yml)
+[![Provenance: attested](https://img.shields.io/badge/provenance-attested-brightgreen)](https://github.com/mt2-coder/mt2-account-aliases/attestations)
+
 *Tradução da [versão em inglês](README.md), atualizada a 4 de outubro de 2026. Em caso de
 diferença, prevalece a versão em inglês.*
 

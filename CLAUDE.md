@@ -72,6 +72,11 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   GitHub strips YouTube players and YouTube's thumbnail URLs change with the thumbnail; the
   YouTube copy (<https://www.youtube.com/watch?v=24Nq1rZX88w>, on the project's own channel) is
   linked right below it.
+- **Badges.** Under the language line, the same four in every README: latest release and licence
+  (shields.io, read from GitHub), Tests (`tests.yml`'s own badge) and a static "provenance:
+  attested" that links to the attestations. Only badges that link to their proof: never "safe",
+  "undetected", "no ban" or "virus-free", and no VirusTotal badge (a false positive on an
+  elevating PowerShell script would show red, and in Metin2's community it marks cheats and bots).
 - **README translations.** One file per language, `README.<code>.md` (`de`, `es`, `fr`, `it`,
   `pt`, `ro`, `tr`), linked from a language line under every README's title. A translation covers the player part
   only and ends with a link to the English technical part; it gives the date of the English text
@@ -177,7 +182,8 @@ Details, minified module ids and how each fact was found: [docs/launcher-interna
 
 ## Testing
 
-1. `node test/logic.test.cjs`: the pure helpers.
+1. `node test/logic.test.cjs`: the pure helpers. `.github/workflows/tests.yml` also runs it on
+   GitHub, on every push to `main` and every pull request.
 2. Popup self-test, headless. Serve the repository root with
    `python -m http.server 18770 --bind 127.0.0.1`, capturing its stderr, then start Chrome with
    `--headless=new --disable-popup-blocking --user-data-dir=<short path under %TEMP%>` and

@@ -3,6 +3,11 @@
 **English** · [Deutsch](README.de.md) · [Español](README.es.md) · [Français](README.fr.md) ·
 [Italiano](README.it.md) · [Português](README.pt.md) · [Română](README.ro.md) · [Türkçe](README.tr.md)
 
+[![Latest release](https://img.shields.io/github/v/release/mt2-coder/mt2-account-aliases)](https://github.com/mt2-coder/mt2-account-aliases/releases/latest)
+[![License: MIT](https://img.shields.io/github/license/mt2-coder/mt2-account-aliases)](LICENSE)
+[![Tests](https://github.com/mt2-coder/mt2-account-aliases/actions/workflows/tests.yml/badge.svg)](https://github.com/mt2-coder/mt2-account-aliases/actions/workflows/tests.yml)
+[![Provenance: attested](https://img.shields.io/badge/provenance-attested-brightgreen)](https://github.com/mt2-coder/mt2-account-aliases/attestations)
+
 **Give your Metin2 accounts readable names in the Gameforge Client, and find them by name.**
 
 A game account can never be renamed, and on the Tigerghost server the launcher even names them
@@ -183,6 +188,9 @@ page; [CLAUDE.md](CLAUDE.md#testing) describes the headless run and how the inst
 A change to the installer is tested against a copy of `frontend.pak` (`-PakPath`) before it goes
 anywhere near the real launcher.
 
+GitHub runs the unit tests on every push to `main` and every pull request
+([`tests.yml`](.github/workflows/tests.yml)); the Tests badge at the top shows the last result.
+
 ### Releasing
 
 1. In `CHANGELOG.md`, turn `## [Unreleased]` into `## [x.y.z] - <date>`, open a new empty
@@ -205,6 +213,7 @@ changelog section).
 | [`scripts/alias-addon.ps1`](scripts/alias-addon.ps1) | the installer: `status`, `install`, `revert`, `-Diagnostic` |
 | [`release/`](release/) | what the players' archive adds (`.cmd` files, `README.txt`) and `build.py`, which builds it |
 | [`.github/workflows/release.yml`](.github/workflows/release.yml) | builds the archive on GitHub and opens a draft release |
+| [`.github/workflows/tests.yml`](.github/workflows/tests.yml) | runs the unit tests on every push to `main` and every pull request |
 | [`test/logic.test.cjs`](test/logic.test.cjs) | unit tests of the add-on's pure helpers, for Node |
 | [`test/mock-launcher.html`](test/mock-launcher.html) | look-alike of the launcher's Settings popup, to run the add-on in a browser |
 | [`docs/`](docs/) | how the launcher works, as far as the add-on is concerned |
