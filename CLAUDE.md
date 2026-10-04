@@ -65,7 +65,10 @@ launcher works, in detail: [docs/launcher-internals.md](docs/launcher-internals.
   running. The relaunch passes `-ExecutionPolicy Bypass`: the elevated session does not inherit
   the caller's policy, and Windows PowerShell's default one (Restricted) refuses every script.
 - **README.** Written for players first: title, the demo video, what the add-on
-  does, why it is safe, install, uninstall, troubleshooting. The technical part comes last, under
+  does, why it is safe, install, uninstall, troubleshooting. The install steps say only what to
+  do, in as few words as possible, so that the install feels as simple as it is: no explanations
+  (they belong in "Is it safe?") and no optional steps (unblocking the ZIP is not needed: it only
+  spares Windows' "publisher could not be verified" warning). The technical part comes last, under
   "For developers and Gameforge's teams", including how the feature could be built into the
   launcher. Safety claims there stay strictly true: no claim about what the game or its anti-cheat
   can detect. The video plays in the README from a GitHub upload (`user-attachments`), because

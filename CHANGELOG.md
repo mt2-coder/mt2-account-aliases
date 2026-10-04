@@ -38,6 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   troubleshoot it. The technical
   part comes last, for contributors and for Gameforge's teams, with notes on building the feature
   into the launcher itself. Players were landing on a page written for developers.
+- **Shorter install steps** — every README, the archive's `README.txt` and the release notes no
+  longer ask players to unblock the ZIP in its properties. That step was never needed: it only
+  spared Windows' "publisher could not be verified" warning, and such an unusual step made a
+  simple install look complicated. The steps now say only what to do: download and extract,
+  close Metin2 and the launcher, double-click `Install.cmd`, click **Run**, then **Yes**.
 
 ## [0.1.0] - 2026-10-03
 

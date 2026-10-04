@@ -75,16 +75,12 @@ garantia.
 Precisas do Windows 10 ou 11, do Gameforge Client e de direitos de administrador.
 
 1. Transfere `mt2-account-aliases-x.y.z.zip` da
-   [versão mais recente](https://github.com/mt2-coder/mt2-account-aliases/releases/latest).
-2. Clica com o botão direito no ZIP > **Propriedades** > marca **Desbloquear** > **OK** e depois
-   extrai-o. Caso contrário, o Windows pede confirmação sempre que executas um dos seus ficheiros
-   `.cmd`, porque não estão assinados digitalmente.
-3. Fecha os teus clientes de Metin2 e depois fecha completamente o Gameforge Client, incluindo o
-   seu ícone na área de notificação.
-4. Faz duplo clique em **`Install.cmd`** e clica em **Sim** no pedido do Windows (Controlo de
-   Conta de Utilizador): os ficheiros do launcher estão em `Program Files` («Programas» ou
-   «Arquivos de Programas» no Explorador), por isso alterá-los exige direitos de administrador.
-5. Inicia o launcher e abre **Definições > Conta de jogo**.
+   [versão mais recente](https://github.com/mt2-coder/mt2-account-aliases/releases/latest) e
+   extrai-o.
+2. Fecha o Metin2 e o Gameforge Client, incluindo o seu ícone na área de notificação.
+3. Faz duplo clique em **`Install.cmd`**. Se o Windows perguntar, clica em **Executar** e depois em
+   **Sim**.
+4. Inicia o launcher e abre **Definições > Conta de jogo**.
 
 O instalador encontra o launcher onde quer que esteja instalado. Verificado com o Gameforge Client
 2.8.5.1959 (interface 0.486.2).

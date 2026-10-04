@@ -31,17 +31,10 @@ In the launcher, Settings > Game account:
 Install
 -------
 
-1. Close your Metin2 clients, then close the Gameforge Client completely, including its icon in
-   the notification area (bottom right of the taskbar).
-2. Double-click Install.cmd. Windows asks twice:
-   - "Open File - Security Warning: The publisher could not be verified": click "Run". The files
-     come from the internet and carry no digital signature (signing needs a paid certificate);
-   - the administrator prompt (UAC): click "Yes". The launcher's files sit under Program Files,
-     so changing one needs administrator rights.
+1. Close Metin2 and the Gameforge Client, including its icon in the notification area (bottom
+   right of the taskbar).
+2. Double-click Install.cmd. If Windows asks, click "Run", then "Yes".
 3. Start the launcher and open Settings > Game account.
-
-The security warning comes back every time you run a .cmd file. To stop it, unblock the ZIP
-before extracting it: right-click it > Properties > tick "Unblock" > OK, then extract it again.
 
 
 Uninstall

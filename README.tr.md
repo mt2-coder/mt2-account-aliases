@@ -73,16 +73,12 @@ Eklenti MIT lisansı altında özgür yazılımdır; yani hiçbir garanti olmada
 Windows 10 veya 11, Gameforge Client ve yönetici haklarına ihtiyacın var.
 
 1. `mt2-account-aliases-x.y.z.zip` dosyasını
-   [en son sürümden](https://github.com/mt2-coder/mt2-account-aliases/releases/latest) indir.
-2. ZIP dosyasına sağ tıkla > **Özellikler** > **Engellemeyi kaldır** (Unblock) kutusunu işaretle >
-   **Tamam**, sonra dosyayı ayıkla. Aksi hâlde Windows, içindeki `.cmd` dosyalarından birini her
-   çalıştırdığında onay ister, çünkü bu dosyalar dijital olarak imzalı değildir.
-3. Metin2 istemcilerini kapat, sonra Gameforge Client'ı bildirim alanındaki simgesi de dahil olmak
-   üzere tamamen kapat.
-4. **`Install.cmd`** dosyasına çift tıkla ve Windows uyarısında (Kullanıcı Hesabı Denetimi)
-   **Evet**'e tıkla: launcher'ın dosyaları `Program Files` altında bulunduğu için bunlardan birini
-   değiştirmek yönetici hakları gerektirir.
-5. Launcher'ı başlat ve **Ayarlar > Oyun hesabı** bölümünü aç.
+   [en son sürümden](https://github.com/mt2-coder/mt2-account-aliases/releases/latest) indir ve
+   ayıkla.
+2. Metin2'yi ve bildirim alanındaki simgesi de dahil Gameforge Client'ı kapat.
+3. **`Install.cmd`** dosyasına çift tıkla. Windows sorarsa önce **Çalıştır**'a, sonra **Evet**'e
+   tıkla.
+4. Launcher'ı başlat ve **Ayarlar > Oyun hesabı** bölümünü aç.
 
 Yükleyici, launcher nereye kurulmuş olursa olsun onu bulur. Gameforge Client 2.8.5.1959 (arayüz
 0.486.2) ile denendi.

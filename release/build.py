@@ -50,12 +50,9 @@ NOTES = """**Install guide in your language:** {translations}
 
 ## Install
 
-1. Download `{name}.zip` below. Right-click it > Properties > tick **Unblock** > OK, then
-   extract it. Otherwise Windows asks for confirmation ("The publisher could not be verified")
-   every time you run one of its `.cmd` files, because they are not digitally signed.
-2. Close your Metin2 clients, then close the Gameforge Client completely, including its icon in
-   the notification area.
-3. Double-click `Install.cmd` and accept the Windows prompt (UAC).
+1. Download `{name}.zip` below and extract it.
+2. Close Metin2 and the Gameforge Client, including its icon in the notification area.
+3. Double-click `Install.cmd`. If Windows asks, click **Run**, then **Yes**.
 
 `README.txt`, in the archive, covers uninstalling, launcher updates and backing up your aliases.
 

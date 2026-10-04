@@ -63,16 +63,11 @@ The add-on is free software under the MIT licence, which means it comes without 
 
 You need Windows 10 or 11, the Gameforge Client and administrator rights.
 
-1. Download `mt2-account-aliases-x.y.z.zip` from the
+1. Download and extract `mt2-account-aliases-x.y.z.zip` from the
    [latest release](https://github.com/mt2-coder/mt2-account-aliases/releases/latest).
-2. Right-click the ZIP > **Properties** > tick **Unblock** > **OK**, then extract it. Otherwise
-   Windows asks for confirmation each time you run one of its `.cmd` files, because they are not
-   digitally signed.
-3. Close your Metin2 clients, then close the Gameforge Client completely, including its icon in the
-   notification area.
-4. Double-click **`Install.cmd`** and click **Yes** in the Windows prompt (UAC): the launcher's
-   files sit under `Program Files`, so changing one needs administrator rights.
-5. Start the launcher and open **Settings > Game account**.
+2. Close Metin2 and the Gameforge Client, including its icon in the notification area.
+3. Double-click **`Install.cmd`**. If Windows asks, click **Run**, then **Yes**.
+4. Start the launcher and open **Settings > Game account**.
 
 The installer finds the launcher wherever it is installed. Checked with Gameforge Client
 2.8.5.1959 (interface 0.486.2).
