@@ -26,7 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Badges and a tests workflow** — every README opens with four badges: the latest release, the
   MIT licence, the tests and the archive's provenance attestation. Each one links to its proof,
   for players who want to check rather than trust; none claims the add-on is "safe" or
-  "undetected". `.github/workflows/tests.yml` runs the unit tests on every push to `main` and every
+  "undetected". The release badge is blue: shields.io paints 0.x versions orange, which read as a
+  warning next to the others. `.github/workflows/tests.yml` runs the unit tests on every push to `main` and every
   pull request, so the Tests badge reflects the code as it stands.
 
 ### Changed
